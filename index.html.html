@@ -106,9 +106,9 @@
 <body class="antialiased">
 
     <!-- Cabeçalho -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-300" id="header">
-        <!-- CORREÇÃO: Menu agora é oculto em telas pequenas (mobile) -->
-        <nav class="container mx-auto px-6 py-4 hidden md:flex justify-between items-center">
+    <!-- CORREÇÃO: Header agora é oculto em telas pequenas (mobile) e visível a partir de tablets -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-300 hidden md:block" id="header">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#">
                 <img src="assets/logo-dynamis.png" alt="Logo Studio Dynamis" class="h-8 md:h-10" id="logo">
             </a>
@@ -131,7 +131,6 @@
                     <source src="assets/video-horizontal.mp4" media="(orientation: landscape)">
                     Seu navegador não suporta vídeos.
                 </video>
-                <!-- CORREÇÃO: Overlay removido para deixar o vídeo mais vivo -->
             </div>
         </section>
 
@@ -248,7 +247,6 @@
     <!-- Rodapé -->
     <footer class="border-t border-gray-800 py-8">
         <div class="container mx-auto text-center text-gray-600">
-            <!-- CORREÇÃO: Rodapé com ícones -->
             <div class="flex justify-center space-x-8">
                  <a href="https://wa.me/5542991350705" target="_blank" class="text-4xl text-gray-400 hover:text-principal">
                     <ion-icon name="logo-whatsapp"></ion-icon>
@@ -417,15 +415,17 @@
 
         // Mudar cor do header ao rolar a página
         const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.style.backgroundColor = 'var(--cor-fundo)';
-                header.classList.add('shadow-lg');
-            } else {
-                header.style.backgroundColor = 'transparent';
-                header.classList.remove('shadow-lg');
-            }
-        });
+        if (header) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.style.backgroundColor = 'var(--cor-fundo)';
+                    header.classList.add('shadow-lg');
+                } else {
+                    header.style.backgroundColor = 'transparent';
+                    header.classList.remove('shadow-lg');
+                }
+            });
+        }
 
     </script>
 
