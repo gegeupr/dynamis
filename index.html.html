@@ -68,13 +68,14 @@
             z-index: 0;
         }
         #hero-video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            /* CORREÇÃO: Ajuste para melhor adaptação em mobile */
             position: absolute;
             top: 50%;
             left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* 100/56.25 = 1.77 ~= 16/9 aspect ratio */
+            min-height: 100vh;
+            min-width: 177.77vh; /* 100/56.25 = 1.77 ~= 16/9 aspect ratio */
             transform: translate(-50%, -50%);
             object-fit: cover;
         }
