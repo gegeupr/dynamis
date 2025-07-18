@@ -65,7 +65,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: -1;
+            z-index: 0;
         }
         #hero-video {
             min-width: 100%;
@@ -131,8 +131,12 @@
                 </video>
                 <div class="video-overlay"></div>
             </div>
-            <div class="z-10">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-wider text-white">
+        </section>
+
+        <!-- NOVA Seção de Apresentação -->
+        <section id="apresentacao" class="py-20 text-center px-4 bg-fundo">
+             <div class="relative z-10">
+                <h1 class="text-5xl md:text-7xl font-black uppercase tracking-wider text-white">
                     Onde a Força<br>Encontra o <span class="text-principal">Movimento</span>
                 </h1>
                 <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
@@ -145,7 +149,7 @@
         </section>
 
         <!-- Seção Sobre / Metodologia -->
-        <section id="sobre" class="py-20 px-4 bg-fundo">
+        <section id="sobre" class="py-20 px-4" style="background-color: #101010;">
             <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
                 <div>
                     <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop" alt="Alunos treinando no Studio Dynamis" class="rounded-lg shadow-2xl">
@@ -163,7 +167,7 @@
         </section>
         
         <!-- Seção Galeria -->
-        <section id="galeria" class="py-20 px-4" style="background-color: #101010;">
+        <section id="galeria" class="py-20 px-4 bg-fundo">
             <div class="container mx-auto">
                 <h2 class="text-4xl font-black text-center mb-12 uppercase">Nosso <span class="text-principal">Ambiente</span></h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -196,11 +200,11 @@
         </section>
 
         <!-- Seção Planos -->
-        <section id="planos" class="py-20 px-4 bg-fundo">
+        <section id="planos" class="py-20 px-4" style="background-color: #101010;">
             <div class="container mx-auto text-center">
                 <h2 class="text-4xl font-black uppercase mb-12">Planos e <span class="text-principal">Valores</span></h2>
                 <div class="flex justify-center">
-                    <div class="border-2 border-principal p-8 rounded-lg flex flex-col transform md:scale-105 shadow-2xl shadow-principal/20 w-full max-w-md relative">
+                    <div class="border-2 border-principal bg-fundo p-8 rounded-lg flex flex-col transform md:scale-105 shadow-2xl shadow-principal/20 w-full max-w-md relative">
                         <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-principal text-black px-4 py-1 rounded-full text-sm font-bold uppercase">Mais Vendido</div>
                         <h3 class="text-2xl font-bold uppercase mb-4">Mini Grupo <span class="text-sm font-light">(4 pessoas)</span></h3>
                         <ul class="space-y-3 text-gray-300 text-left flex-grow">
@@ -218,7 +222,7 @@
         </section>
 
         <!-- Seção Contato -->
-        <section id="contato" class="py-20 px-4" style="background-color: #101010;">
+        <section id="contato" class="py-20 px-4 bg-fundo">
             <div class="container mx-auto text-center">
                 <h2 class="text-4xl font-black uppercase mb-4">Venha nos <span class="text-principal">Visitar</span></h2>
                 <p class="text-lg text-gray-400 mb-2 font-semibold">Rua Fagundes Varela, 17 - Ponta Grossa, PR</p>
