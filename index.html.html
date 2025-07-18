@@ -164,31 +164,34 @@
         <section id="galeria" class="py-20 px-4 bg-fundo">
             <div class="container mx-auto">
                 <h2 class="text-4xl font-black text-center mb-12 uppercase">Nosso <span class="text-principal">Ambiente</span></h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <a href="assets/galeria/foto1.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto1.jpg" alt="Foto da galeria do studio 1" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
-                    <a href="assets/galeria/foto2.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto2.jpg" alt="Foto da galeria do studio 2" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
-                    <a href="assets/galeria/foto3.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto3.jpg" alt="Foto da galeria do studio 3" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
-                    <a href="assets/galeria/foto4.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto4.jpg" alt="Foto da galeria do studio 4" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
-                     <a href="assets/galeria/foto5.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto5.jpg" alt="Foto da galeria do studio 5" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
-                    <a href="assets/galeria/foto6.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto6.jpg" alt="Foto da galeria do studio 6" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
-                    <a href="assets/galeria/foto7.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto7.jpg" alt="Foto da galeria do studio 7" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
-                    <a href="assets/galeria/foto8.jpg" class="gallery-item group">
-                        <img src="assets/galeria/foto8.jpg" alt="Foto da galeria do studio 8" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
-                    </a>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Vídeo 1 -->
+                    <div class="gallery-item group relative rounded-lg overflow-hidden cursor-pointer" data-video-src="assets/ambiente1.mp4">
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300">
+                            <source src="assets/ambiente1.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <ion-icon name="play-circle-outline" class="text-6xl text-white opacity-80 group-hover:opacity-100 transition-opacity"></ion-icon>
+                        </div>
+                    </div>
+                    <!-- Vídeo 2 -->
+                    <div class="gallery-item group relative rounded-lg overflow-hidden cursor-pointer" data-video-src="assets/ambiente2.mp4">
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300">
+                            <source src="assets/ambiente2.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <ion-icon name="play-circle-outline" class="text-6xl text-white opacity-80 group-hover:opacity-100 transition-opacity"></ion-icon>
+                        </div>
+                    </div>
+                    <!-- Vídeo 3 -->
+                    <div class="gallery-item group relative rounded-lg overflow-hidden cursor-pointer" data-video-src="assets/ambiente3.mp4">
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300">
+                            <source src="assets/ambiente3.mp4" type="video/mp4">
+                        </video>
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <ion-icon name="play-circle-outline" class="text-6xl text-white opacity-80 group-hover:opacity-100 transition-opacity"></ion-icon>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -289,10 +292,14 @@
         </div>
     </div>
 
-    <!-- Modal da Galeria -->
+    <!-- Modal da Galeria (Carrossel de Vídeos) -->
     <div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-[80] hidden transition-opacity duration-300 opacity-0">
-        <button id="close-gallery-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-5xl">&times;</button>
-        <img id="gallery-modal-image" src="" alt="Foto da galeria em tamanho grande" class="max-w-full max-h-full object-contain">
+        <button id="close-gallery-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-5xl z-20">&times;</button>
+        <button id="prev-video-btn" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-5xl z-20">&lt;</button>
+        <button id="next-video-btn" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-5xl z-20">&gt;</button>
+        <div class="w-full h-full flex items-center justify-center">
+            <video id="gallery-modal-video" src="" controls class="max-w-full max-h-full object-contain z-10"></video>
+        </div>
     </div>
     
     <!-- Modal Aula Experimental -->
@@ -378,30 +385,53 @@
         setupModal('open-plans-modal-btn', 'close-plans-modal-btn', 'plans-modal');
         setupModal('open-experimental-btn', 'close-experimental-modal-btn', 'experimental-modal');
 
-        // Lógica para o Modal da Galeria
+        // Lógica para o Modal da Galeria (Carrossel de Vídeos)
         const galleryModal = document.getElementById('gallery-modal');
-        const galleryModalImage = document.getElementById('gallery-modal-image');
+        const galleryModalVideo = document.getElementById('gallery-modal-video');
         const closeGalleryModalBtn = document.getElementById('close-gallery-modal-btn');
         const galleryItems = document.querySelectorAll('.gallery-item');
+        const prevVideoBtn = document.getElementById('prev-video-btn');
+        const nextVideoBtn = document.getElementById('next-video-btn');
 
-        galleryItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.body.classList.add('modal-open');
-                const imageUrl = item.getAttribute('href');
-                galleryModalImage.setAttribute('src', imageUrl);
-                galleryModal.classList.remove('hidden');
-                setTimeout(() => galleryModal.classList.remove('opacity-0'), 10);
-            });
+        const videoSources = Array.from(galleryItems).map(item => item.dataset.videoSrc);
+        let currentVideoIndex = 0;
+
+        const openGalleryModal = (index) => {
+            currentVideoIndex = index;
+            galleryModalVideo.src = videoSources[currentVideoIndex];
+            galleryModalVideo.play();
+            document.body.classList.add('modal-open');
+            galleryModal.classList.remove('hidden');
+            setTimeout(() => galleryModal.classList.remove('opacity-0'), 10);
+        };
+        
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => openGalleryModal(index));
         });
 
         const closeGalleryModal = () => {
+            galleryModalVideo.pause();
+            galleryModalVideo.src = "";
             document.body.classList.remove('modal-open');
             galleryModal.classList.add('opacity-0');
             setTimeout(() => galleryModal.classList.add('hidden'), 300);
         };
 
+        const showNextVideo = () => {
+            currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+            galleryModalVideo.src = videoSources[currentVideoIndex];
+            galleryModalVideo.play();
+        };
+
+        const showPrevVideo = () => {
+            currentVideoIndex = (currentVideoIndex - 1 + videoSources.length) % videoSources.length;
+            galleryModalVideo.src = videoSources[currentVideoIndex];
+            galleryModalVideo.play();
+        };
+
         closeGalleryModalBtn.addEventListener('click', closeGalleryModal);
+        nextVideoBtn.addEventListener('click', showNextVideo);
+        prevVideoBtn.addEventListener('click', showPrevVideo);
         galleryModal.addEventListener('click', (event) => {
             if (event.target === galleryModal) closeGalleryModal();
         });
