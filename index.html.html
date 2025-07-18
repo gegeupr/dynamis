@@ -84,8 +84,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* CORREÇÃO: Reduzida a intensidade da camada escura para o vídeo ficar mais vivo */
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        @media (orientation: portrait) {
+            #hero-video {
+                object-fit: contain;
+            }
         }
 
         /* Estilos para o efeito cascata do Modal */
@@ -98,6 +103,11 @@
         .modal-card.is-visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* CORREÇÃO: Impede o scroll da página quando um modal está aberto */
+        body.modal-open {
+            overflow: hidden;
         }
     </style>
 </head>
@@ -115,11 +125,19 @@
                 <a href="#planos" class="text-white hover:text-principal transition-colors font-semibold">Planos</a>
                 <a href="#contato" class="text-white hover:text-principal transition-colors font-semibold">Contato</a>
             </div>
-            <button class="md:hidden text-white text-3xl">
+            <button id="mobile-menu-btn" class="md:hidden text-white text-3xl z-[70]">
                 <ion-icon name="menu-outline"></ion-icon>
             </button>
         </nav>
     </header>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-[60] hidden flex-col items-center justify-center space-y-8 text-2xl transition-opacity duration-300 opacity-0">
+        <a href="#sobre" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">O Studio</a>
+        <a href="#galeria" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">Galeria</a>
+        <a href="#planos" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">Planos</a>
+        <a href="#contato" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">Contato</a>
+    </div>
 
     <main>
 
@@ -127,7 +145,6 @@
         <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
             <div id="hero-video-container">
                 <video autoplay muted loop playsinline id="hero-video">
-                    <!-- O navegador escolherá o vídeo correto com base na orientação do ecrã -->
                     <source src="assets/video-vertical.mp4" media="(orientation: portrait)">
                     <source src="assets/video-horizontal.mp4" media="(orientation: landscape)">
                     Seu navegador não suporta vídeos.
@@ -254,9 +271,9 @@
     </footer>
 
     <!-- Modal de Planos -->
-    <div id="plans-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
-        <div style="background-color: #101010;" class="border border-gray-800 rounded-lg p-8 max-w-7xl w-full relative">
-            <button id="close-plans-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white text-3xl">&times;</button>
+    <div id="plans-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-[70] hidden transition-opacity duration-300 opacity-0 overflow-y-auto">
+        <div style="background-color: #101010;" class="border border-gray-800 rounded-lg p-8 max-w-7xl w-full relative my-auto">
+            <button id="close-plans-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white text-3xl z-10">&times;</button>
             <h2 class="text-4xl font-black text-center mb-12 uppercase">Nossos <span class="text-principal">Planos</span></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="border border-gray-800 p-8 rounded-lg flex flex-col modal-card" style="background-color: #000000;">
@@ -291,15 +308,15 @@
     </div>
 
     <!-- Modal da Galeria -->
-    <div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-[60] hidden transition-opacity duration-300 opacity-0">
+    <div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-[80] hidden transition-opacity duration-300 opacity-0">
         <button id="close-gallery-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-5xl">&times;</button>
         <img id="gallery-modal-image" src="" alt="Foto da galeria em tamanho grande" class="max-w-full max-h-full object-contain">
     </div>
     
     <!-- Modal Aula Experimental -->
-    <div id="experimental-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
-        <div style="background-color: #101010;" class="border border-gray-800 rounded-lg p-8 max-w-4xl w-full relative">
-            <button id="close-experimental-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white text-3xl">&times;</button>
+    <div id="experimental-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-[70] hidden transition-opacity duration-300 opacity-0 overflow-y-auto">
+        <div style="background-color: #101010;" class="border border-gray-800 rounded-lg p-8 max-w-4xl w-full relative my-auto">
+            <button id="close-experimental-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white text-3xl z-10">&times;</button>
             <h2 class="text-3xl font-black text-center mb-8 uppercase">Bem-vindo à sua primeira aula na <span class="text-principal">Dynamis</span>!</h2>
             <p class="text-center text-gray-300 mb-10">Não importa o seu nível, você pertence a este lugar. Estamos aqui para te ajudar a se sentir em casa desde o primeiro dia.</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
@@ -346,9 +363,13 @@
             const openBtn = document.getElementById(openBtnId);
             const closeBtn = document.getElementById(closeBtnId);
             const modal = document.getElementById(modalId);
+            
+            if (!openBtn || !closeBtn || !modal) return;
+
             const modalCards = modal.querySelectorAll('.modal-card');
 
             const openModal = () => {
+                document.body.classList.add('modal-open');
                 modal.classList.remove('hidden');
                 setTimeout(() => modal.classList.remove('opacity-0'), 10);
                 
@@ -358,14 +379,15 @@
             };
 
             const closeModal = () => {
+                document.body.classList.remove('modal-open');
                 modal.classList.add('opacity-0');
                 modalCards.forEach(card => card.classList.remove('is-visible'));
                 setTimeout(() => modal.classList.add('hidden'), 300);
             };
 
-            if(openBtn) openBtn.addEventListener('click', openModal);
-            if(closeBtn) closeBtn.addEventListener('click', closeModal);
-            if(modal) modal.addEventListener('click', (event) => {
+            openBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
                 if (event.target === modal) closeModal();
             });
         };
@@ -383,6 +405,7 @@
         galleryItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
+                document.body.classList.add('modal-open');
                 const imageUrl = item.getAttribute('href');
                 galleryModalImage.setAttribute('src', imageUrl);
                 galleryModal.classList.remove('hidden');
@@ -391,6 +414,7 @@
         });
 
         const closeGalleryModal = () => {
+            document.body.classList.remove('modal-open');
             galleryModal.classList.add('opacity-0');
             setTimeout(() => galleryModal.classList.add('hidden'), 300);
         };
@@ -411,6 +435,36 @@
                 header.classList.remove('shadow-lg');
             }
         });
+
+        // Lógica para o Menu Mobile
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+        const menuIcon = mobileMenuBtn.querySelector('ion-icon');
+
+        const toggleMenu = () => {
+            const isMenuOpen = !mobileMenu.classList.contains('hidden');
+            if (isMenuOpen) {
+                document.body.classList.remove('modal-open');
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                menuIcon.setAttribute('name', 'menu-outline');
+            } else {
+                document.body.classList.add('modal-open');
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+                menuIcon.setAttribute('name', 'close-outline');
+            }
+        };
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Adiciona um pequeno delay para o scroll acontecer antes de fechar
+                setTimeout(toggleMenu, 200);
+            });
+        });
+
     </script>
 
 </body>
