@@ -78,14 +78,6 @@
             height: auto;
             object-fit: cover;
         }
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
         
         @media (orientation: portrait) {
             #hero-video {
@@ -105,7 +97,7 @@
             transform: translateY(0);
         }
 
-        /* CORREÇÃO: Impede o scroll da página quando um modal está aberto */
+        /* Impede o scroll da página quando um modal está aberto */
         body.modal-open {
             overflow: hidden;
         }
@@ -115,29 +107,19 @@
 
     <!-- Cabeçalho -->
     <header class="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-300" id="header">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <!-- CORREÇÃO: Menu agora é oculto em telas pequenas (mobile) -->
+        <nav class="container mx-auto px-6 py-4 hidden md:flex justify-between items-center">
             <a href="#">
                 <img src="assets/logo-dynamis.png" alt="Logo Studio Dynamis" class="h-8 md:h-10" id="logo">
             </a>
-            <div class="hidden md:flex items-center space-x-8">
+            <div class="flex items-center space-x-8">
                 <a href="#sobre" class="text-white hover:text-principal transition-colors font-semibold">O Studio</a>
                 <a href="#galeria" class="text-white hover:text-principal transition-colors font-semibold">Galeria</a>
                 <a href="#planos" class="text-white hover:text-principal transition-colors font-semibold">Planos</a>
                 <a href="#contato" class="text-white hover:text-principal transition-colors font-semibold">Contato</a>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden text-white text-3xl z-[70]">
-                <ion-icon name="menu-outline"></ion-icon>
-            </button>
         </nav>
     </header>
-
-    <!-- Menu Mobile -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-[60] hidden flex-col items-center justify-center space-y-8 text-2xl transition-opacity duration-300 opacity-0">
-        <a href="#sobre" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">O Studio</a>
-        <a href="#galeria" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">Galeria</a>
-        <a href="#planos" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">Planos</a>
-        <a href="#contato" class="mobile-menu-link text-white hover:text-principal transition-colors font-semibold">Contato</a>
-    </div>
 
     <main>
 
@@ -149,7 +131,7 @@
                     <source src="assets/video-horizontal.mp4" media="(orientation: landscape)">
                     Seu navegador não suporta vídeos.
                 </video>
-                <div class="video-overlay"></div>
+                <!-- CORREÇÃO: Overlay removido para deixar o vídeo mais vivo -->
             </div>
         </section>
 
@@ -266,7 +248,16 @@
     <!-- Rodapé -->
     <footer class="border-t border-gray-800 py-8">
         <div class="container mx-auto text-center text-gray-600">
-            <p>&copy; 2025 Studio Dynamis. Todos os direitos reservados.</p>
+            <!-- CORREÇÃO: Rodapé com ícones -->
+            <div class="flex justify-center space-x-8">
+                 <a href="https://wa.me/5542991350705" target="_blank" class="text-4xl text-gray-400 hover:text-principal">
+                    <ion-icon name="logo-whatsapp"></ion-icon>
+                </a>
+                <a href="https://www.instagram.com/dynamis.treinamento" target="_blank" class="text-4xl text-gray-400 hover:text-principal">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                </a>
+            </div>
+            <p class="text-sm mt-4">&copy; 2025 Studio Dynamis. Todos os direitos reservados.</p>
         </div>
     </footer>
 
@@ -434,35 +425,6 @@
                 header.style.backgroundColor = 'transparent';
                 header.classList.remove('shadow-lg');
             }
-        });
-
-        // Lógica para o Menu Mobile
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-        const menuIcon = mobileMenuBtn.querySelector('ion-icon');
-
-        const toggleMenu = () => {
-            const isMenuOpen = !mobileMenu.classList.contains('hidden');
-            if (isMenuOpen) {
-                document.body.classList.remove('modal-open');
-                mobileMenu.classList.add('opacity-0');
-                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
-                menuIcon.setAttribute('name', 'menu-outline');
-            } else {
-                document.body.classList.add('modal-open');
-                mobileMenu.classList.remove('hidden');
-                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
-                menuIcon.setAttribute('name', 'close-outline');
-            }
-        };
-
-        mobileMenuBtn.addEventListener('click', toggleMenu);
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                // Adiciona um pequeno delay para o scroll acontecer antes de fechar
-                setTimeout(toggleMenu, 200);
-            });
         });
 
     </script>
