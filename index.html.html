@@ -66,8 +66,10 @@
             height: 100%;
             overflow: hidden;
             z-index: 0;
+            background-color: #000;
         }
-        #hero-video {
+        
+        #hero-video-main, #hero-video-blur-bg {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -76,20 +78,37 @@
             min-height: 100%;
             width: auto;
             height: auto;
-            object-fit: cover;
         }
+
+        #hero-video-main {
+            object-fit: cover; /* Padrão para desktop */
+            z-index: 2;
+        }
+
+        #hero-video-blur-bg {
+            display: none; /* Escondido por padrão */
+            object-fit: cover;
+            filter: blur(20px) brightness(0.7);
+            transform: translate(-50%, -50%) scale(1.1); /* Escala para evitar bordas */
+            z-index: 1;
+        }
+
         .video-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 3;
         }
         
         @media (orientation: portrait) {
-            #hero-video {
-                object-fit: contain;
+            #hero-video-main {
+                object-fit: contain; /* Mostra o vídeo inteiro no mobile */
+            }
+            #hero-video-blur-bg {
+                display: block; /* Mostra o fundo desfocado no mobile */
             }
         }
 
@@ -112,7 +131,7 @@
     <header class="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-300" id="header">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#">
-                <img src="assets/logo-dynamis.png" alt="Logo Studio Dynamis" class="h-8 md:h-10" id="logo">
+                <img src="assets/logo-dynamis.png" alt="Logo Studio Dynamis" class="h-8 md:h-10 relative z-10" id="logo">
             </a>
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#sobre" class="text-white hover:text-principal transition-colors font-semibold">O Studio</a>
@@ -131,7 +150,10 @@
         <!-- Seção Hero com Vídeo -->
         <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
             <div id="hero-video-container">
-                <video autoplay muted loop playsinline id="hero-video">
+                <video autoplay muted loop playsinline id="hero-video-blur-bg">
+                    <source src="assets/video-dynamis.mp4" type="video/mp4">
+                </video>
+                <video autoplay muted loop playsinline id="hero-video-main">
                     <source src="assets/video-dynamis.mp4" type="video/mp4">
                     Seu navegador não suporta vídeos.
                 </video>
