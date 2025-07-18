@@ -66,8 +66,10 @@
             height: 100%;
             overflow: hidden;
             z-index: 0;
+            background-color: #000;
         }
-        #hero-video {
+        
+        #hero-video-main, #hero-video-blur-bg {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -76,12 +78,27 @@
             min-height: 100%;
             width: auto;
             height: auto;
+        }
+
+        #hero-video-main {
+            object-fit: cover; /* Padrão para desktop */
+            z-index: 2;
+        }
+
+        #hero-video-blur-bg {
+            display: none; /* Escondido por padrão */
             object-fit: cover;
+            filter: blur(20px) brightness(0.7);
+            transform: translate(-50%, -50%) scale(1.1); /* Escala para evitar bordas */
+            z-index: 1;
         }
         
         @media (orientation: portrait) {
-            #hero-video {
-                object-fit: contain;
+            #hero-video-main {
+                object-fit: contain; /* Mostra o vídeo inteiro no mobile */
+            }
+            #hero-video-blur-bg {
+                display: block; /* Mostra o fundo desfocado no mobile */
             }
         }
 
@@ -126,7 +143,12 @@
         <!-- Seção Hero com Vídeo -->
         <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
             <div id="hero-video-container">
-                <video autoplay muted loop playsinline id="hero-video">
+                <!-- CORREÇÃO: Duas tags de vídeo para o efeito de fundo desfocado -->
+                <video autoplay muted loop playsinline id="hero-video-blur-bg">
+                    <source src="assets/video-vertical.mp4" type="video/mp4">
+                    <source src="assets/video-horizontal.mp4" type="video/mp4">
+                </video>
+                <video autoplay muted loop playsinline id="hero-video-main">
                     <source src="assets/video-vertical.mp4" media="(orientation: portrait)">
                     <source src="assets/video-horizontal.mp4" media="(orientation: landscape)">
                     Seu navegador não suporta vídeos.
