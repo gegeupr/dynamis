@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Dynamis - Treinamento Físico Personalizado</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Orbitron (Títulos) e Montserrat (Textos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- Ícones (Ionicons) -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- Estilos Personalizados -->
+    <style>
+        /* ==========================================================================
+         ÁREA DE PERSONALIZAÇÃO FÁCIL
+         Cores e fontes aplicadas a partir do logo do cliente.
+         ==========================================================================
+        */
+        :root {
+            /* Cor Principal (Verde VIVO fornecido pelo cliente) */
+            --cor-principal: #7CFC00;
+            
+            /* Cor de Fundo Escura (Preto do logo) */
+            --cor-fundo: #000000;
+
+            /* Cor do Texto Principal (Branco) */
+            --cor-texto: #F5F5F5;
+
+            /* Fontes (Títulos com estilo tech, corpo com boa legibilidade) */
+            --fonte-titulo: 'Orbitron', sans-serif;
+            --fonte-corpo: 'Montserrat', sans-serif;
+        }
+
+        /* Aplicação das variáveis */
+        body {
+            font-family: var(--fonte-corpo);
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--fonte-titulo);
+        }
+        .bg-principal { background-color: var(--cor-principal); }
+        .text-principal { color: var(--cor-principal); }
+        .border-principal { border-color: var(--cor-principal); }
+        .hover\:bg-principal-dark:hover { filter: brightness(0.9); }
+        .hover\:text-principal:hover { color: var(--cor-principal); }
+        .shadow-principal\/20 { box-shadow: 0 0 25px -5px rgba(124, 252, 0, 0.3), 0 8px 10px -6px rgba(124, 252, 0, 0.3); }
+
+
+        /* Estilo para o vídeo de fundo */
+        #hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        #hero-video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Estilos para o efeito cascata do Modal */
+        .modal-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .modal-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cabeçalho -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-transparent transition-all duration-300" id="header">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#">
+                <img src="assets/logo-dynamis.png" alt="Logo Studio Dynamis" class="h-8 md:h-10" id="logo">
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#sobre" class="text-white hover:text-principal transition-colors font-semibold">O Studio</a>
+                <a href="#galeria" class="text-white hover:text-principal transition-colors font-semibold">Galeria</a>
+                <a href="#planos" class="text-white hover:text-principal transition-colors font-semibold">Planos</a>
+                <a href="#contato" class="text-white hover:text-principal transition-colors font-semibold">Contato</a>
+            </div>
+            <button class="md:hidden text-white text-3xl">
+                <ion-icon name="menu-outline"></ion-icon>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Seção Hero com Vídeo -->
+        <section class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+            <div id="hero-video-container">
+                <video autoplay muted loop playsinline id="hero-video">
+                    <source src="assets/video-dynamis.mp4" type="video/mp4">
+                    Seu navegador não suporta vídeos.
+                </video>
+                <div class="video-overlay"></div>
+            </div>
+            <div class="z-10">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-wider text-white">
+                    Onde a Força<br>Encontra o <span class="text-principal">Movimento</span>
+                </h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+                    Potencializando sua capacidade física e mental através dos movimentos.
+                </p>
+                <button id="open-experimental-btn" class="mt-8 inline-block bg-principal text-black font-bold py-4 px-10 rounded-full uppercase tracking-wider hover:bg-principal-dark transition-all transform hover:scale-105 shadow-lg">
+                    Agende sua Aula Experimental
+                </button>
+            </div>
+        </section>
+
+        <!-- Seção Sobre / Metodologia -->
+        <section id="sobre" class="py-20 px-4 bg-fundo">
+            <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop" alt="Alunos treinando no Studio Dynamis" class="rounded-lg shadow-2xl">
+                </div>
+                <div class="text-center md:text-left">
+                    <h2 class="text-4xl font-black uppercase mb-4">Nossa <span class="text-principal">Filosofia</span></h2>
+                    <p class="text-lg text-gray-300 leading-relaxed mb-4">
+                        A Dynamis tem como objetivo transformar corpo e mente. Exploramos ao máximo sua energia interior, pois Dynamis é força, potência e a capacidade de alcançar o seu melhor.
+                    </p>
+                     <p class="text-lg text-gray-300 leading-relaxed">
+                        Nossos treinos são desenhados para desenvolver força, agilidade e resistência que você usa no seu dia a dia. Com acompanhamento profissional e um ambiente motivador, aqui você supera seus limites.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção Galeria -->
+        <section id="galeria" class="py-20 px-4" style="background-color: #101010;">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-black text-center mb-12 uppercase">Nosso <span class="text-principal">Ambiente</span></h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <a href="assets/galeria/foto1.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto1.jpg" alt="Foto da galeria do studio 1" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <a href="assets/galeria/foto2.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto2.jpg" alt="Foto da galeria do studio 2" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <a href="assets/galeria/foto3.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto3.jpg" alt="Foto da galeria do studio 3" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <a href="assets/galeria/foto4.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto4.jpg" alt="Foto da galeria do studio 4" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                     <a href="assets/galeria/foto5.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto5.jpg" alt="Foto da galeria do studio 5" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <a href="assets/galeria/foto6.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto6.jpg" alt="Foto da galeria do studio 6" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <a href="assets/galeria/foto7.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto7.jpg" alt="Foto da galeria do studio 7" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <a href="assets/galeria/foto8.jpg" class="gallery-item group">
+                        <img src="assets/galeria/foto8.jpg" alt="Foto da galeria do studio 8" class="w-full h-full object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Planos -->
+        <section id="planos" class="py-20 px-4 bg-fundo">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-black uppercase mb-12">Planos e <span class="text-principal">Valores</span></h2>
+                <div class="flex justify-center">
+                    <div class="border-2 border-principal p-8 rounded-lg flex flex-col transform md:scale-105 shadow-2xl shadow-principal/20 w-full max-w-md relative">
+                        <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-principal text-black px-4 py-1 rounded-full text-sm font-bold uppercase">Mais Vendido</div>
+                        <h3 class="text-2xl font-bold uppercase mb-4">Mini Grupo <span class="text-sm font-light">(4 pessoas)</span></h3>
+                        <ul class="space-y-3 text-gray-300 text-left flex-grow">
+                            <li><span class="text-principal font-bold">R$50,00</span> - Aula Avulsa</li>
+                            <li><span class="text-principal font-bold">R$350,00</span> - 2x na Semana</li>
+                            <li><span class="text-principal font-bold">R$400,00</span> - 3x na Semana</li>
+                            <li><span class="text-principal font-bold">R$500,00</span> - Todos os Dias</li>
+                        </ul>
+                    </div>
+                </div>
+                <button id="open-plans-modal-btn" class="mt-10 border border-gray-700 text-gray-300 font-semibold py-3 px-8 rounded-full hover:bg-gray-800 hover:border-gray-600 transition-colors">
+                    Ver Todos os Planos
+                </button>
+            </div>
+        </section>
+
+        <!-- Seção Contato -->
+        <section id="contato" class="py-20 px-4" style="background-color: #101010;">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-black uppercase mb-4">Venha nos <span class="text-principal">Visitar</span></h2>
+                <p class="text-lg text-gray-400 mb-2 font-semibold">Rua Fagundes Varela, 17 - Ponta Grossa, PR</p>
+                <div class="flex justify-center space-x-6 my-8">
+                    <a href="https://wa.me/5542991350705" target="_blank" class="flex items-center space-x-2 text-lg text-gray-300 hover:text-principal">
+                        <ion-icon name="logo-whatsapp"></ion-icon>
+                        <span>(42) 9 9135-0705</span>
+                    </a>
+                    <a href="https://www.instagram.com/dynamis.treinamento" target="_blank" class="flex items-center space-x-2 text-lg text-gray-300 hover:text-principal">
+                        <ion-icon name="logo-instagram"></ion-icon>
+                        <span>@dynamis.treinamento</span>
+                    </a>
+                </div>
+                <div class="h-80 rounded-lg overflow-hidden shadow-lg">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.356394396018!2d-50.15978188553926!3d-25.0897223429393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94e81a1e3a4065c7%3A0x8422393284e35c82!2sR.%20Fagundes%20Varela%2C%2017%20-%20Oficinas%2C%20Ponta%20Grossa%20-%20PR%2C%2084036-160!5e0!3m2!1spt-BR!2sbr!4v1689642053151!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="border-t border-gray-800 py-8">
+        <div class="container mx-auto text-center text-gray-600">
+            <p>&copy; 2025 Studio Dynamis. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Planos -->
+    <div id="plans-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
+        <div style="background-color: #101010;" class="border border-gray-800 rounded-lg p-8 max-w-7xl w-full relative">
+            <button id="close-plans-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white text-3xl">&times;</button>
+            <h2 class="text-4xl font-black text-center mb-12 uppercase">Nossos <span class="text-principal">Planos</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="border border-gray-800 p-8 rounded-lg flex flex-col modal-card" style="background-color: #000000;">
+                    <h3 class="text-2xl font-bold uppercase mb-4">Individual</h3>
+                    <ul class="space-y-3 text-gray-300 text-left flex-grow">
+                        <li><span class="text-principal font-bold">R$100,00</span> - Aula Avulsa</li>
+                        <li><span class="text-principal font-bold">R$650,00</span> - 2x na Semana</li>
+                        <li><span class="text-principal font-bold">R$920,00</span> - 3x na Semana</li>
+                        <li><span class="text-principal font-bold">R$1100,00</span> - Todos os Dias</li>
+                    </ul>
+                </div>
+                <div class="border-2 border-principal p-8 rounded-lg flex flex-col modal-card" style="background-color: #000000;">
+                    <h3 class="text-2xl font-bold uppercase mb-4">Dupla</h3>
+                    <ul class="space-y-3 text-gray-300 text-left flex-grow">
+                        <li><span class="text-principal font-bold">R$80,00</span> - Aula Avulsa</li>
+                        <li><span class="text-principal font-bold">R$500,00</span> - 2x na Semana</li>
+                        <li><span class="text-principal font-bold">R$650,00</span> - 3x na Semana</li>
+                        <li><span class="text-principal font-bold">R$850,00</span> - Todos os Dias</li>
+                    </ul>
+                </div>
+                <div class="border border-gray-800 p-8 rounded-lg flex flex-col modal-card" style="background-color: #000000;">
+                    <h3 class="text-2xl font-bold uppercase mb-4">Mini Grupo <span class="text-sm font-light">(4 pessoas)</span></h3>
+                    <ul class="space-y-3 text-gray-300 text-left flex-grow">
+                        <li><span class="text-principal font-bold">R$50,00</span> - Aula Avulsa</li>
+                        <li><span class="text-principal font-bold">R$350,00</span> - 2x na Semana</li>
+                        <li><span class="text-principal font-bold">R$400,00</span> - 3x na Semana</li>
+                        <li><span class="text-principal font-bold">R$500,00</span> - Todos os Dias</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal da Galeria -->
+    <div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-[60] hidden transition-opacity duration-300 opacity-0">
+        <button id="close-gallery-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-5xl">&times;</button>
+        <img id="gallery-modal-image" src="" alt="Foto da galeria em tamanho grande" class="max-w-full max-h-full object-contain">
+    </div>
+    
+    <!-- Modal Aula Experimental -->
+    <div id="experimental-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
+        <div style="background-color: #101010;" class="border border-gray-800 rounded-lg p-8 max-w-4xl w-full relative">
+            <button id="close-experimental-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-white text-3xl">&times;</button>
+            <h2 class="text-3xl font-black text-center mb-8 uppercase">Bem-vindo à sua primeira aula na <span class="text-principal">Dynamis</span>!</h2>
+            <p class="text-center text-gray-300 mb-10">Não importa o seu nível, você pertence a este lugar. Estamos aqui para te ajudar a se sentir em casa desde o primeiro dia.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <div class="border border-gray-800 p-4 rounded-lg" style="background-color: #000000;">
+                    <h3 class="font-bold text-principal mb-2">Antes da sua aula</h3>
+                    <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                        <li>Chegue 10-15 minutos mais cedo.</li>
+                        <li>Traga garrafa de água e toalha.</li>
+                        <li>Use roupas confortáveis.</li>
+                        <li>A jornada começa aqui, não precisa "estar em forma".</li>
+                    </ul>
+                </div>
+                <div class="border border-gray-800 p-4 rounded-lg" style="background-color: #000000;">
+                    <h3 class="font-bold text-principal mb-2">Como é a sensação</h3>
+                    <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                        <li>Aulas de 45 a 60 minutos.</li>
+                        <li>Projetada para todos os níveis.</li>
+                        <li>Aquecimento, treino e alongamento.</li>
+                        <li>Seu treinador irá demonstrar e adaptar os movimentos.</li>
+                    </ul>
+                </div>
+                <div class="border border-gray-800 p-4 rounded-lg" style="background-color: #000000;">
+                    <h3 class="font-bold text-principal mb-2">Depois da aula</h3>
+                    <ul class="text-sm text-gray-300 space-y-2 list-disc list-inside">
+                        <li>Você se sentirá mais forte e confiante.</li>
+                        <li>Converse com o treinador e os membros.</li>
+                        <li>A Dynamis é mais que um treino, é uma comunidade.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <h3 class="text-2xl font-bold mb-4">Pronto para nos experimentar?</h3>
+                <a href="https://wa.me/5542991350705?text=Ol%C3%A1!%20Vi%20o%20site%20do%20Studio%20Dynamis%20e%20gostaria%20de%20agendar%20minha%20aula%20experimental." target="_blank" class="inline-block bg-principal text-black font-bold py-3 px-8 rounded-full uppercase tracking-wider hover:bg-principal-dark transition-all transform hover:scale-105">
+                    Resgate sua aula experimental FREE agora
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Função genérica para controlar modais
+        const setupModal = (openBtnId, closeBtnId, modalId) => {
+            const openBtn = document.getElementById(openBtnId);
+            const closeBtn = document.getElementById(closeBtnId);
+            const modal = document.getElementById(modalId);
+            const modalCards = modal.querySelectorAll('.modal-card');
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                
+                modalCards.forEach((card, index) => {
+                    setTimeout(() => card.classList.add('is-visible'), 100 * (index + 1));
+                });
+            };
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0');
+                modalCards.forEach(card => card.classList.remove('is-visible'));
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            };
+
+            if(openBtn) openBtn.addEventListener('click', openModal);
+            if(closeBtn) closeBtn.addEventListener('click', closeModal);
+            if(modal) modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeModal();
+            });
+        };
+
+        // Configurar todos os modais
+        setupModal('open-plans-modal-btn', 'close-plans-modal-btn', 'plans-modal');
+        setupModal('open-experimental-btn', 'close-experimental-modal-btn', 'experimental-modal');
+
+        // Lógica para o Modal da Galeria
+        const galleryModal = document.getElementById('gallery-modal');
+        const galleryModalImage = document.getElementById('gallery-modal-image');
+        const closeGalleryModalBtn = document.getElementById('close-gallery-modal-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const imageUrl = item.getAttribute('href');
+                galleryModalImage.setAttribute('src', imageUrl);
+                galleryModal.classList.remove('hidden');
+                setTimeout(() => galleryModal.classList.remove('opacity-0'), 10);
+            });
+        });
+
+        const closeGalleryModal = () => {
+            galleryModal.classList.add('opacity-0');
+            setTimeout(() => galleryModal.classList.add('hidden'), 300);
+        };
+
+        closeGalleryModalBtn.addEventListener('click', closeGalleryModal);
+        galleryModal.addEventListener('click', (event) => {
+            if (event.target === galleryModal) closeGalleryModal();
+        });
+
+        // Mudar cor do header ao rolar a página
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'var(--cor-fundo)';
+                header.classList.add('shadow-lg');
+            } else {
+                header.style.backgroundColor = 'transparent';
+                header.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+
+</body>
+</html>
